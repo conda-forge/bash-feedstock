@@ -12,7 +12,7 @@ source:
     - bashbug-perm.patch
 
 build:
-  number: 0
+  number: 1000
   script: |
     set -ex
     ./configure --prefix=$PREFIX --with-installed-readline=$PREFIX --with-curses
