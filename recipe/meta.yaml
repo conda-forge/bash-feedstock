@@ -1,6 +1,8 @@
+{% set version = "4.3.042" %}
+
 package:
   name: bash
-  version: "4.3.042"
+  version: {{ version }}
 
 build:
   number: 0
@@ -8,7 +10,7 @@ build:
 
 requirements:
   run:
-    - m2-bash =4.3.042
+    - m2-bash ={{ version }}
 
 test:
   commands:
