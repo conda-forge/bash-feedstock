@@ -18,7 +18,7 @@ about:
   home: https://www.gnu.org/software/bash/
   license: GPL v3
   license_family: GPL
-  license_file: COPYING
+  license_file: LICENSE
   summary: 'Bourne Again Shell'
   description: |
     Bash is the GNU Project's shell. Bash is the Bourne Again SHell.
