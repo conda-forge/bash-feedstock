@@ -1,20 +1,57 @@
 {% set name = "bash" %}
-{% set version = "4.4.18" %}
+{% set _patch_level = 11 %}
+{% set base_version = "5.0" %}
+{% set version = base_version + '.0' + _patch_level|string %}
+
+### From ArchLinux, better than nothing (less good than .sigs, see later)
+{% set patch_md5s = ('b026862ab596a5883bb4f0d1077a3819',
+                     '2f4a7787365790ae57f36b311701ea7e',
+                     'af7f2dd93fd5429fb5e9a642ff74f87d',
+                     'b60545b273bfa4e00a760f2c648bed9c',
+                     '875a0bedf48b74e453e3997c84b5d8a4',
+                     '4a8ee95adb72c3aba03d9e8c9f96ece6',
+                     '411560d81fde2dc5b17b83c3f3b58c6f',
+                     'dd7cf7a784d1838822cad8d419315991',
+                     'c1b3e937cd6dccbb7fd772f32812a0da',
+                     '19b41e73b03602d0e261c471b53e670c',
+                     '414339330a3634137081a97f2c8615a8') %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: http://ftp.gnu.org/gnu/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 604d9eec5e4ed5fd2180ee44dd756ddca92e0b6aa4217bbab2b6227380317f23
-  patches:
-    - bashbug-perm.patch
+  - url: http://ftp.gnu.org/gnu/{{ name }}/{{ name }}-{{ base_version }}.tar.gz
+    sha256: b4a80f2ac66170b2913efbfb9f2594f1f76c7b1afd11f799e22035d63077fb4d
+  ### ArchLinux deals with is more gracefully and checks .sigs. Conda-build needs to help here I think.
+  #  _patchlevel=011
+  # if [[ $((10#${_patchlevel})) -gt 0 ]]; then
+  #   for (( _p=1; _p<=$((10#${_patchlevel})); _p++ )); do
+  #     source=(${source[@]} https://ftp.gnu.org/gnu/bash/bash-$_basever-patches/bash${_basever//.}-$(printf "%03d" $_p){,.sig})
+  #   done
+  # fi
+  #
+  # prepare() {
+  #   cd $pkgname-$_basever
+  #
+  #   for (( _p=1; _p<=$((10#${_patchlevel})); _p++ )); do
+  #     msg "applying patch bash${_basever//.}-$(printf "%03d" $_p)"
+  #     patch -p0 -i ../bash${_basever//.}-$(printf "%03d" $_p)
+  #   done
+  # }
+  {% for n in range(_patch_level) %}
+  - url: https://ftp.gnu.org/gnu/bash/bash-5.0-patches/bash50-{{ '%03d' % (n+1) }}
+    md5: {{ patch_md5s[n] }}
+    folder: gnu-patches/
+  {% endfor %}
 
 build:
-  number: 1001
+  number: 0
   script: |
     set -ex
+    for f in ./gnu-patches/*; do
+      patch -p2 < $f
+    done
     ./configure --prefix=$PREFIX --with-installed-readline=$PREFIX --with-curses
     make
     make tests
@@ -24,6 +61,8 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - make
+    - bison
   host:
     - readline
     - ncurses
@@ -55,3 +94,4 @@ about:
 extra:
   recipe-maintainers:
     - scopatz
+    - mingwandroid
