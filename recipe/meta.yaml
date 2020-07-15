@@ -46,7 +46,7 @@ source:
   {% endfor %}
 
 build:
-  number: 0
+  number: 1
   script: |
     set -ex
     for f in ./gnu-patches/*; do
