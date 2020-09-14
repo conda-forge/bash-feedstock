@@ -1,20 +1,9 @@
 {% set name = "bash" %}
-{% set version = "5.0.011" %}
+{% set version = "5.0.018" %}
 {% set _patch_level = version.split(".")[2]|int %}
 {% set base_version = version.split(".")[0]+"."+version.split(".")[1] %}
 
 ### From ArchLinux, better than nothing (less good than .sigs, see later)
-{% set patch_md5s = ('b026862ab596a5883bb4f0d1077a3819',
-                     '2f4a7787365790ae57f36b311701ea7e',
-                     'af7f2dd93fd5429fb5e9a642ff74f87d',
-                     'b60545b273bfa4e00a760f2c648bed9c',
-                     '875a0bedf48b74e453e3997c84b5d8a4',
-                     '4a8ee95adb72c3aba03d9e8c9f96ece6',
-                     '411560d81fde2dc5b17b83c3f3b58c6f',
-                     'dd7cf7a784d1838822cad8d419315991',
-                     'c1b3e937cd6dccbb7fd772f32812a0da',
-                     '19b41e73b03602d0e261c471b53e670c',
-                     '414339330a3634137081a97f2c8615a8') %}
 
 package:
   name: {{ name|lower }}
@@ -23,35 +12,30 @@ package:
 source:
   - url: http://ftp.gnu.org/gnu/{{ name }}/{{ name }}-{{ base_version }}.tar.gz
     sha256: b4a80f2ac66170b2913efbfb9f2594f1f76c7b1afd11f799e22035d63077fb4d
-  ### ArchLinux deals with is more gracefully and checks .sigs. Conda-build needs to help here I think.
-  #  _patchlevel=011
-  # if [[ $((10#${_patchlevel})) -gt 0 ]]; then
-  #   for (( _p=1; _p<=$((10#${_patchlevel})); _p++ )); do
-  #     source=(${source[@]} https://ftp.gnu.org/gnu/bash/bash-$_basever-patches/bash${_basever//.}-$(printf "%03d" $_p){,.sig})
-  #   done
-  # fi
-  #
-  # prepare() {
-  #   cd $pkgname-$_basever
-  #
-  #   for (( _p=1; _p<=$((10#${_patchlevel})); _p++ )); do
-  #     msg "applying patch bash${_basever//.}-$(printf "%03d" $_p)"
-  #     patch -p0 -i ../bash${_basever//.}-$(printf "%03d" $_p)
-  #   done
-  # }
-  {% for n in range(_patch_level) %}
-  - url: https://ftp.gnu.org/gnu/bash/bash-5.0-patches/bash50-{{ '%03d' % (n+1) }}
-    md5: {{ patch_md5s[n] }}
-    folder: gnu-patches/
-  {% endfor %}
+    patches:
+      - gnu-patches/bash50-001
+      - gnu-patches/bash50-002
+      - gnu-patches/bash50-003
+      - gnu-patches/bash50-004
+      - gnu-patches/bash50-005
+      - gnu-patches/bash50-006
+      - gnu-patches/bash50-007
+      - gnu-patches/bash50-008
+      - gnu-patches/bash50-009
+      - gnu-patches/bash50-010
+      - gnu-patches/bash50-011
+      - gnu-patches/bash50-012
+      - gnu-patches/bash50-013
+      - gnu-patches/bash50-014
+      - gnu-patches/bash50-015
+      - gnu-patches/bash50-016
+      - gnu-patches/bash50-017
+      - gnu-patches/bash50-018
 
 build:
   number: 0
   script: |
     set -ex
-    for f in ./gnu-patches/*; do
-      patch -p2 < $f
-    done
     ./configure --prefix=$PREFIX --with-installed-readline=$PREFIX --with-curses
     make
     make tests
@@ -65,14 +49,14 @@ requirements:
     - bison
   host:
     - readline
-    - ncurses
   run:
     - readline
-    - ncurses
 
 test:
+  requires:
+    - ripgrep
   commands:
-    - bash --version
+    - bash --version | rg {{ base_version }}.{{ _patch_level }}
 
 about:
   home: https://www.gnu.org/software/bash/
