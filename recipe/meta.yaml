@@ -36,7 +36,7 @@ build:
   number: 0
   script: |
     set -ex
-    ./configure --prefix=$PREFIX --with-installed-readline=$PREFIX --with-curses
+    ./configure --prefix=$PREFIX --with-installed-readline=$PREFIX
     make
     make tests
     make install
