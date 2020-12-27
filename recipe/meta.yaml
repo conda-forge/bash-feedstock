@@ -1,5 +1,5 @@
 {% set name = "bash" %}
-{% set version = "5.0.018" %}
+{% set version = "5.1.0" %}
 {% set _patch_level = version.split(".")[2]|int %}
 {% set base_version = version.split(".")[0]+"."+version.split(".")[1] %}
 
@@ -11,7 +11,7 @@ package:
 
 source:
   - url: http://ftp.gnu.org/gnu/{{ name }}/{{ name }}-{{ base_version }}.tar.gz
-    sha256: b4a80f2ac66170b2913efbfb9f2594f1f76c7b1afd11f799e22035d63077fb4d
+    sha256: cc012bc860406dcf42f64431bcd3d2fa7560c02915a601aba9cd597a39329baa
     patches:
       - gnu-patches/bash50-001
       - gnu-patches/bash50-002
@@ -40,7 +40,7 @@ build:
     make
     make tests
     make install
-  skip: True  # [win]
+  skip: true  # [win]
 
 requirements:
   build:
@@ -63,7 +63,7 @@ about:
   license: GPL-3.0-or-later
   license_family: GPL
   license_file: COPYING
-  summary: 'Bourne Again Shell'
+  summary: Bourne Again Shell
   description: |
     Bash is the GNU Project's shell. Bash is the Bourne Again SHell.
     Bash is an sh-compatible shell that incorporates useful features
