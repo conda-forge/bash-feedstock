@@ -5,9 +5,13 @@ Home: https://www.gnu.org/software/bash/
 
 Package license: GPL-3.0-or-later
 
-Feedstock license: BSD-3-Clause
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/bash-feedstock/blob/master/LICENSE.txt)
 
 Summary: Bourne Again Shell
+
+Development: https://www.gnu.org/help/
+
+Documentation: https://www.gnu.org/software/bash/manual/
 
 Bash is the GNU Project's shell. Bash is the Bourne Again SHell.
 Bash is an sh-compatible shell that incorporates useful features
