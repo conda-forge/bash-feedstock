@@ -1,5 +1,5 @@
 {% set name = "bash" %}
-{% set version = "5.0.018" %}
+{% set version = "5.1.016" %}
 {% set _patch_level = version.split(".")[2]|int %}
 {% set base_version = version.split(".")[0]+"."+version.split(".")[1] %}
 
@@ -10,36 +10,29 @@ package:
   version: {{ version }}
 
 source:
-  - url: http://ftp.gnu.org/gnu/{{ name }}/{{ name }}-{{ base_version }}.tar.gz
+  - url: https://ftp.gnu.org/gnu/{{ name }}/{{ name }}-{{ base_version }}.tar.gz
     sha256: b4a80f2ac66170b2913efbfb9f2594f1f76c7b1afd11f799e22035d63077fb4d
     patches:
-      - gnu-patches/bash50-001
-      - gnu-patches/bash50-002
-      - gnu-patches/bash50-003
-      - gnu-patches/bash50-004
-      - gnu-patches/bash50-005
-      - gnu-patches/bash50-006
-      - gnu-patches/bash50-007
-      - gnu-patches/bash50-008
-      - gnu-patches/bash50-009
-      - gnu-patches/bash50-010
-      - gnu-patches/bash50-011
-      - gnu-patches/bash50-012
-      - gnu-patches/bash50-013
-      - gnu-patches/bash50-014
-      - gnu-patches/bash50-015
-      - gnu-patches/bash50-016
-      - gnu-patches/bash50-017
-      - gnu-patches/bash50-018
+      # These are from https://ftp.gnu.org/gnu/bash/bash-5.1-patches/
+      - gnu-patches/bash51-001
+      - gnu-patches/bash51-002
+      - gnu-patches/bash51-003
+      - gnu-patches/bash51-004
+      - gnu-patches/bash51-005
+      - gnu-patches/bash51-006
+      - gnu-patches/bash51-007
+      - gnu-patches/bash51-008
+      - gnu-patches/bash51-009
+      - gnu-patches/bash51-010
+      - gnu-patches/bash51-011
+      - gnu-patches/bash51-012
+      - gnu-patches/bash51-013
+      - gnu-patches/bash51-014
+      - gnu-patches/bash51-015
+      - gnu-patches/bash51-016
 
 build:
   number: 0
-  script: |
-    set -ex
-    ./configure --prefix=$PREFIX --with-installed-readline=$PREFIX
-    make
-    make tests
-    make install
   skip: True  # [win]
 
 requirements:
@@ -73,9 +66,10 @@ about:
     interactive use. In addition, most sh scripts can be run by Bash
     without modification.
   doc_url: https://www.gnu.org/software/bash/manual/
-  dev_url: https://www.gnu.org/help/
+  dev_url: https://git.savannah.gnu.org/cgit/bash.git/
 
 extra:
   recipe-maintainers:
     - scopatz
     - mingwandroid
+    - matthiasdiener

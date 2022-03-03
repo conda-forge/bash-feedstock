@@ -3,9 +3,9 @@ MACOSX_DEPLOYMENT_TARGET:
 c_compiler:
 - clang
 c_compiler_version:
-- '10'
+- '12'
 channel_sources:
-- conda-forge,defaults
+- conda-forge
 channel_targets:
 - conda-forge main
 macos_machine:
@@ -14,6 +14,6 @@ pin_run_as_build:
   readline:
     max_pin: x
 readline:
-- '8.0'
+- '8'
 target_platform:
 - osx-64
