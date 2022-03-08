@@ -1,35 +1,13 @@
 {% set name = "bash" %}
-{% set version = "5.1.016" %}
-{% set _patch_level = version.split(".")[2]|int %}
-{% set base_version = version.split(".")[0]+"."+version.split(".")[1] %}
-
-### From ArchLinux, better than nothing (less good than .sigs, see later)
+{% set version = "5.1.16" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  - url: https://ftp.gnu.org/gnu/{{ name }}/{{ name }}-{{ base_version }}.tar.gz
-    sha256: cc012bc860406dcf42f64431bcd3d2fa7560c02915a601aba9cd597a39329baa
-    patches:
-      # These are from https://ftp.gnu.org/gnu/bash/bash-5.1-patches/
-      - gnu-patches/bash51-001
-      - gnu-patches/bash51-002
-      - gnu-patches/bash51-003
-      - gnu-patches/bash51-004
-      - gnu-patches/bash51-005
-      - gnu-patches/bash51-006
-      - gnu-patches/bash51-007
-      - gnu-patches/bash51-008
-      - gnu-patches/bash51-009
-      - gnu-patches/bash51-010
-      - gnu-patches/bash51-011
-      - gnu-patches/bash51-012
-      - gnu-patches/bash51-013
-      - gnu-patches/bash51-014
-      - gnu-patches/bash51-015
-      - gnu-patches/bash51-016
+  - url: https://ftp.gnu.org/gnu/{{ name }}/{{ name }}-{{ version }}.tar.gz
+    sha256: 5bac17218d3911834520dad13cd1f85ab944e1c09ae1aba55906be1f8192f558
 
 build:
   number: 0
@@ -46,10 +24,8 @@ requirements:
     - readline
 
 test:
-  requires:
-    - ripgrep
   commands:
-    - bash --version | rg {{ base_version }}.{{ _patch_level }}
+    - bash --version | grep {{ version }}
 
 about:
   home: https://www.gnu.org/software/bash/
