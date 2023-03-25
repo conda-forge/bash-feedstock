@@ -10,7 +10,7 @@ package:
   version: {{ version }}
 
 source:
-  - url: http://ftp.gnu.org/gnu/{{ name }}/{{ name }}-{{ base_version }}.tar.gz
+  - url: https://ftp.gnu.org/gnu/{{ name }}/{{ name }}-{{ base_version }}.tar.gz
     sha256: b4a80f2ac66170b2913efbfb9f2594f1f76c7b1afd11f799e22035d63077fb4d
     patches:
       - gnu-patches/bash50-001
@@ -34,12 +34,6 @@ source:
 
 build:
   number: 0
-  script: |
-    set -ex
-    ./configure --prefix=$PREFIX --with-installed-readline=$PREFIX
-    make
-    make tests
-    make install
   skip: True  # [win]
 
 requirements:
@@ -73,9 +67,10 @@ about:
     interactive use. In addition, most sh scripts can be run by Bash
     without modification.
   doc_url: https://www.gnu.org/software/bash/manual/
-  dev_url: https://www.gnu.org/help/
+  dev_url: https://git.savannah.gnu.org/cgit/bash.git/
 
 extra:
   recipe-maintainers:
     - scopatz
     - mingwandroid
+    - matthiasdiener
