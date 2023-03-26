@@ -1,13 +1,35 @@
 {% set name = "bash" %}
-{% set version = "5.1.16" %}
+{% set version = "5.0.018" %}
+{% set _patch_level = version.split(".")[2]|int %}
+{% set base_version = version.split(".")[0]+"."+version.split(".")[1] %}
+
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  - url: https://ftp.gnu.org/gnu/{{ name }}/{{ name }}-{{ version }}.tar.gz
-    sha256: 5bac17218d3911834520dad13cd1f85ab944e1c09ae1aba55906be1f8192f558
+  - url: https://ftp.gnu.org/gnu/{{ name }}/{{ name }}-{{ base_version }}.tar.gz
+    sha256: b4a80f2ac66170b2913efbfb9f2594f1f76c7b1afd11f799e22035d63077fb4d
+    patches:
+      - gnu-patches/bash50-001
+      - gnu-patches/bash50-002
+      - gnu-patches/bash50-003
+      - gnu-patches/bash50-004
+      - gnu-patches/bash50-005
+      - gnu-patches/bash50-006
+      - gnu-patches/bash50-007
+      - gnu-patches/bash50-008
+      - gnu-patches/bash50-009
+      - gnu-patches/bash50-010
+      - gnu-patches/bash50-011
+      - gnu-patches/bash50-012
+      - gnu-patches/bash50-013
+      - gnu-patches/bash50-014
+      - gnu-patches/bash50-015
+      - gnu-patches/bash50-016
+      - gnu-patches/bash50-017
+      - gnu-patches/bash50-018
 
 build:
   number: 0
@@ -25,8 +47,10 @@ requirements:
     - readline
 
 test:
+  requires:
+    - ripgrep
   commands:
-    - bash --version | grep {{ version }}
+    - bash --version | rg {{ base_version }}.{{ _patch_level }}
 
 about:
   home: https://www.gnu.org/software/bash/
