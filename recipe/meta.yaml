@@ -1,5 +1,8 @@
 {% set name = "bash" %}
-{% set version = "5.1.16" %}
+{% set version = "5.0.018" %}
+{% set _patch_level = version.split(".")[2]|int %}
+{% set base_version = version.split(".")[0]+"."+version.split(".")[1] %}
+
 
 package:
   name: {{ name|lower }}
@@ -44,8 +47,10 @@ requirements:
     - readline
 
 test:
+  requires:
+    - ripgrep
   commands:
-    - bash --version | grep {{ version }}
+    - bash --version | rg {{ base_version }}.{{ _patch_level }}
 
 about:
   home: https://www.gnu.org/software/bash/
