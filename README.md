@@ -1,11 +1,11 @@
-About bash
-==========
+About bash-feedstock
+====================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/bash-feedstock/blob/main/LICENSE.txt)
 
 Home: https://www.gnu.org/software/bash/
 
 Package license: GPL-3.0-or-later
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/bash-feedstock/blob/main/LICENSE.txt)
 
 Summary: Bourne Again Shell
 

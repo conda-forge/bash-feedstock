@@ -1,5 +1,5 @@
 {% set name = "bash" %}
-{% set version = "5.2.9" %}
+{% set version = "5.2.15" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   - url: https://ftp.gnu.org/gnu/{{ name }}/{{ name }}-{{ version }}.tar.gz
-    sha256: 68d978264253bc933d692f1de195e2e5b463a3984dfb4e5504b076865f16b6dd
+    sha256: 13720965b5f4fc3a0d4b61dd37e7565c741da9a5be24edc2ae00182fc1b3588c
 
 build:
   number: 0
