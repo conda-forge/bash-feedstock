@@ -4,7 +4,7 @@ cp $BUILD_PREFIX/share/gnuconfig/config.* ./support
 
 set -ex
 
-./configure --prefix=$PREFIX --with-installed-readline=$PREFIX
+./configure --prefix=$PREFIX --with-installed-readline=$PREFIX --without-bash-malloc
 
 make -j${CPU_COUNT}
 
