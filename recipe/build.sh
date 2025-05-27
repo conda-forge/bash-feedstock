@@ -4,7 +4,13 @@ cp $BUILD_PREFIX/share/gnuconfig/config.* ./support
 
 set -ex
 
-./configure --prefix=$PREFIX --with-installed-readline=$PREFIX --without-bash-malloc
+flags=()
+
+if ! [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
+    flags+=("bash_cv_getcwd_malloc=yes")
+fi
+
+./configure --prefix=$PREFIX --with-installed-readline=$PREFIX --without-bash-malloc "${flags[@]}"
 
 make -j${CPU_COUNT}
 
