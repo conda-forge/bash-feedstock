@@ -1,23 +1,24 @@
-{% set name = "bash" %}
-{% set version = "5.2.21" %}
+context:
+  name: bash
+  version: "5.2.37"
 
 package:
-  name: {{ name|lower }}
-  version: {{ version }}
+  name: ${{ name|lower }}
+  version: ${{ version }}
 
 source:
-  - url: https://ftp.gnu.org/gnu/{{ name }}/{{ name }}-{{ version }}.tar.gz
-    sha256: c8e31bdc59b69aaffc5b36509905ba3e5cbb12747091d27b4b977f078560d5b8
+  - url: https://ftp.gnu.org/gnu/${{ name }}/${{ name }}-${{ version }}.tar.gz
+    sha256: 9599b22ecd1d5787ad7d3b7bf0c59f312b3396d1e281175dd1f8a4014da621ff
 
 build:
-  number: 1
-  skip: True  # [win]
+  number: 0
+  skip: win
 
 requirements:
   build:
     - gnuconfig  # [unix]
-    - {{ compiler('c') }}
-    - {{ stdlib('c') }}
+    - ${{ compiler('c') }}
+    - ${{ stdlib('c') }}
     - make
     - bison
   host:
@@ -25,15 +26,14 @@ requirements:
   run:
     - readline
 
-test:
-  commands:
+tests:
+  - script:
     - bash --version | grep {{ version }}
     - test -f $PREFIX/bin/bash
 
 about:
-  home: https://www.gnu.org/software/bash/
+  homepage: https://www.gnu.org/software/bash/
   license: GPL-3.0-or-later
-  license_family: GPL
   license_file: COPYING
   summary: 'Bourne Again Shell'
   description: |
@@ -44,11 +44,12 @@ about:
     It offers functional improvements over sh for both programming and
     interactive use. In addition, most sh scripts can be run by Bash
     without modification.
-  doc_url: https://www.gnu.org/software/bash/manual/
-  dev_url: https://git.savannah.gnu.org/cgit/bash.git/
+  documentation: https://www.gnu.org/software/bash/manual/
+  repository: https://git.savannah.gnu.org/cgit/bash.git/
 
 extra:
   recipe-maintainers:
     - scopatz
     - mingwandroid
     - matthiasdiener
+    - wolfv
