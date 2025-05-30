@@ -28,7 +28,7 @@ requirements:
 
 tests:
   - script:
-    - bash --version | grep {{ version }}
+    - bash --version | grep 5.2
     - test -f $PREFIX/bin/bash
 
 about:
