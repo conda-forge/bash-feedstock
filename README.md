@@ -21,7 +21,6 @@ It offers functional improvements over sh for both programming and
 interactive use. In addition, most sh scripts can be run by Bash
 without modification.
 
-
 Current build status
 ====================
 
@@ -204,6 +203,6 @@ Feedstock Maintainers
 =====================
 
 * [@matthiasdiener](https://github.com/matthiasdiener/)
-* [@mingwandroid](https://github.com/mingwandroid/)
 * [@scopatz](https://github.com/scopatz/)
+* [@wolfv](https://github.com/wolfv/)
 
