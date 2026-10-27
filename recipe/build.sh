@@ -6,11 +6,11 @@ set -ex
 
 flags=()
 
-if ! [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" == "1" ]]; then
     flags+=("bash_cv_getcwd_malloc=yes")
 fi
 
-./configure --prefix=$PREFIX --with-installed-readline=$PREFIX --without-bash-malloc "${flags[@]}"
+./configure --build="$BUILD" --host="$HOST" --prefix=$PREFIX --with-installed-readline=$PREFIX --without-bash-malloc "${flags[@]}"
 
 make -j${CPU_COUNT}
 
